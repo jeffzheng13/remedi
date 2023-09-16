@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:remedi/loginScreen.dart';
+import 'package:remedi/pages/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:remedi/data-models/schema.dart';
 import 'package:remedi/pages/dashboard.dart';
