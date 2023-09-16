@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:remedi/pages/auth.dart';
+import 'package:remedi/pages/dashboard.dart';
+import 'package:remedi/pages/loading_animation.dart';
 import 'package:remedi/pages/signUpScreen.dart';
 
 class loginScreen extends StatefulWidget {
@@ -11,9 +14,12 @@ class loginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<loginScreen> {
-final _formKey = new GlobalKey<FormState>();
+  final _formKey = new GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthService _auth = AuthService();
+  String _email = '';
+  String _password = '';
 
   final kHintTextStyle = TextStyle(
     color: Colors.white54,
@@ -38,6 +44,7 @@ final _formKey = new GlobalKey<FormState>();
   );
 
   bool _hidePassword = true;
+  bool loading = false;
 
   Widget _buildEmailTF() {
     return Column(
@@ -53,6 +60,9 @@ final _formKey = new GlobalKey<FormState>();
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            onChanged: (value) => setState(() {
+              _email = value;
+            }),
             controller: _emailController,
             validator: (val) => val == null ||
                     val.isEmpty ||
@@ -95,6 +105,9 @@ final _formKey = new GlobalKey<FormState>();
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            onChanged: (value) => setState(() {
+              _password = value.trim();
+            }),
             controller: _passwordController,
             validator: (val) =>
                 val == null || val.isEmpty ? 'Enter valid password' : null,
@@ -150,19 +163,15 @@ final _formKey = new GlobalKey<FormState>();
       width: double.infinity,
       child: OutlinedButton(
         //elevation: 5.0,
-        onPressed: () {
+        onPressed: () async {
           if (_formKey.currentState!.validate()) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: ((context) => const signUpScreen())));
+            setState() => loading = true;
+            dynamic result = await _auth
+                .signInWithEmailAndPassword(_email, _password)
+                .whenComplete(() => Navigator.of(context)
+                    .push(MaterialPageRoute(builder: ((context) => Dashboard(procedure: null,)))));
           }
         },
-        //padding: EdgeInsets.all(15.0),
-        //shape: RoundedRectangleBorder(
-        //borderRadius: BorderRadius.circular(30.0),
-        //),
-        //color: Colors.white,
         child: Text(
           'LOGIN',
           style: TextStyle(
@@ -315,7 +324,7 @@ final _formKey = new GlobalKey<FormState>();
                       ),
                       _buildPasswordTF(),
                       _buildForgotPasswordBtn(),
-                      _buildLoginBtn(),
+                      loading ? Loading() : _buildLoginBtn(),
                       _buildSignInWithText(),
                       _buildSocialBtnRow(),
                       _buildSignupBtn(),

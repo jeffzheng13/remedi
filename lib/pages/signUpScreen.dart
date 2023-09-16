@@ -68,7 +68,7 @@ class _signUpState extends State<signUpScreen> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.person,
                 color: Colors.white,
               ),
               hintText: 'Enter your first name',
@@ -108,7 +108,7 @@ class _signUpState extends State<signUpScreen> {
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(top: 14.0),
               prefixIcon: Icon(
-                Icons.email,
+                Icons.person,
                 color: Colors.white,
               ),
               hintText: 'Enter your first name',
@@ -390,7 +390,8 @@ class _signUpState extends State<signUpScreen> {
                         ),
                       ),
                       SizedBox(height: 30.0),
-                      Row(children: [_buildFirstNameTF(), _buildLastNameTF()],),
+                      _buildFirstNameTF(),
+                      _buildLastNameTF(),
                       _buildEmailTF(),
                       SizedBox(
                         height: 30.0,
