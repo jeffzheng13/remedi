@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:remedi/pages/auth.dart';
-import 'package:remedi/pages/dashboard.dart';
+//import 'package:remedi/pages/dashboard.dart';
 import 'package:remedi/pages/loading_animation.dart';
 import 'package:remedi/pages/signUpScreen.dart';
 
 class loginScreen extends StatefulWidget {
-  const loginScreen({super.key});
+  loginScreen({super.key});
 
   @override
   State<loginScreen> createState() => _loginScreenState();
@@ -20,6 +20,7 @@ class _loginScreenState extends State<loginScreen> {
   final AuthService _auth = AuthService();
   String _email = '';
   String _password = '';
+  String _error = '';
 
   final kHintTextStyle = TextStyle(
     color: Colors.white54,
@@ -168,8 +169,15 @@ class _loginScreenState extends State<loginScreen> {
             setState() => loading = true;
             dynamic result = await _auth
                 .signInWithEmailAndPassword(_email, _password)
-                .whenComplete(() => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => Dashboard()))));
+                .whenComplete(() => Navigator.of(context).push(
+                    MaterialPageRoute(builder: ((context) => signUpScreen()))));
+            if (result == null) {
+              setState() {
+                _error =
+                    'The email or password is incorrect. Please try again.';
+                loading = false;
+              }
+            }
           }
         },
         child: Text(
@@ -231,7 +239,7 @@ class _loginScreenState extends State<loginScreen> {
 
   Widget _buildSocialBtnRow() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
+      padding: EdgeInsets.symmetric(vertical: 15.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -239,7 +247,7 @@ class _loginScreenState extends State<loginScreen> {
               onPressed: null,
               icon: Icon(
                 Ionicons.logo_google,
-                size: 30,
+                size: 40,
                 color: Colors.white,
               ))
         ],
@@ -258,7 +266,7 @@ class _loginScreenState extends State<loginScreen> {
               text: 'Don\'t have an Account? ',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 13.0,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -266,7 +274,7 @@ class _loginScreenState extends State<loginScreen> {
               text: 'Sign Up',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 13.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -274,6 +282,12 @@ class _loginScreenState extends State<loginScreen> {
         ),
       ),
     );
+  }
+
+  Widget _buildErrorMsg() {
+    return Text(_error,
+        style: TextStyle(fontSize: 13.0, color: Colors.red),
+        textAlign: TextAlign.center);
   }
 
   @override
@@ -300,37 +314,40 @@ class _loginScreenState extends State<loginScreen> {
               Container(
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 40.0,
-                    vertical: 120.0,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40.0,
+                      vertical: 120.0,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 30.0),
+                          _buildEmailTF(),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                          _buildPasswordTF(),
+                          _buildForgotPasswordBtn(),
+                          _buildErrorMsg(),
+                          loading ? Loading() : _buildLoginBtn(),
+                          _buildSignInWithText(),
+                          _buildSocialBtnRow(),
+                          _buildSignupBtn(),
+                        ],
                       ),
-                      SizedBox(height: 30.0),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      loading ? Loading() : _buildLoginBtn(),
-                      _buildSignInWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
-                    ],
-                  ),
-                ),
+                    )),
               )
             ],
           ),

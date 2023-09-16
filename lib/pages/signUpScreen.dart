@@ -39,7 +39,7 @@ class _signUpState extends State<signUpScreen> {
     ],
   );
 
-  bool _hidePassword = true;
+
   Widget _buildFirstNameTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +179,6 @@ class _signUpState extends State<signUpScreen> {
             controller: _passwordController,
             validator: (val) =>
                 val == null || val.isEmpty ? 'Enter valid password' : null,
-            obscureText: _hidePassword,
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'OpenSans',
@@ -190,16 +189,6 @@ class _signUpState extends State<signUpScreen> {
               prefixIcon: Icon(
                 Icons.lock,
                 color: Colors.white,
-              ),
-              suffixIcon: IconButton(
-                icon: Icon(
-                    color: Colors.white,
-                    _hidePassword ? Icons.visibility_off : Icons.visibility),
-                onPressed: () {
-                  setState(() {
-                    _hidePassword = !_hidePassword;
-                  });
-                },
               ),
               hintText: 'Enter your Password',
               hintStyle: kHintTextStyle,
@@ -225,7 +214,7 @@ class _signUpState extends State<signUpScreen> {
     );
   }
 
-  Widget _buildLoginBtn() {
+  Widget _buildSignupBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
@@ -258,7 +247,7 @@ class _signUpState extends State<signUpScreen> {
     );
   }
 
-  Widget _buildSignInWithText() {
+  Widget _buildSignUpWithText() {
     return Column(
       children: <Widget>[
         Text(
@@ -319,7 +308,7 @@ class _signUpState extends State<signUpScreen> {
     );
   }
 
-  Widget _buildSignupBtn() {
+  Widget _buildSignUpBtn() {
     return GestureDetector(
       onTap: () => Navigator.of(context)
           .push(MaterialPageRoute(builder: ((context) => loginScreen()))),
@@ -397,8 +386,8 @@ class _signUpState extends State<signUpScreen> {
                         height: 30.0,
                       ),
                       _buildPasswordTF(),
-                      _buildLoginBtn(),
-                      _buildSignInWithText(),
+                      _buildSignUpBtn(),
+                      _buildSignUpWithText(),
                       _buildSocialBtnRow(),
                       _buildSignupBtn(),
                     ],
