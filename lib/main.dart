@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:realm/realm.dart';
 import 'package:remedi/pages/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:remedi/data-models/schema.dart';
+import 'package:remedi/data-models/schema.dart' as dm;
 import 'package:remedi/pages/dashboard.dart';
 
 void main() {
+  Realm realm = Realm(Configuration.local([dm.User.schema, dm.Procedure.schema, dm.Appointment.schema, dm.ActionItem.schema, dm.Question.schema]));
+  realm.write(() {
+    realm.addAll([
+      dm.User("John", "John@gmail.com", "123"),
+      dm.User("John2", "John2@gmail.com", "1234")
+    ]);
+  });
+  RealmResults<dm.User> users = realm.all<dm.User>();
+  print(users);
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
