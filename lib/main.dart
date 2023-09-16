@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
 import 'package:remedi/pages/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import 'package:remedi/pages/dashboard.dart';
@@ -13,21 +12,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(new RemediApp());
-  // Realm realm = Realm(Configuration.local([
-  //   dm.User.schema,
-  //   dm.Procedure.schema,
-  //   dm.Appointment.schema,
-  //   dm.ActionItem.schema,
-  //   dm.Question.schema
-  // ]));
-  // realm.write(() {
-  //   realm.addAll([
-  //     dm.User("John", "John@gmail.com", "123"),
-  //     dm.User("John2", "John2@gmail.com", "1234")
-  //   ]);
-  // });
-  // RealmResults<dm.User> users = realm.all<dm.User>();
-  // print(users);
 }
 
 class RemediApp extends StatelessWidget {

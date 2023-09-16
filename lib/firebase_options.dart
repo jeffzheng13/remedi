@@ -67,6 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '651584928166',
     projectId: 'remedi-a9712',
     storageBucket: 'remedi-a9712.appspot.com',
+    androidClientId: '651584928166-7cbmhkmqkac5ferkelfqhijedl7ft4ta.apps.googleusercontent.com',
+    iosClientId: '651584928166-e0qo4k1sgj55n5dug69h2lhthq4tkjn4.apps.googleusercontent.com',
     iosBundleId: 'com.example.remedi',
   );
 
@@ -76,6 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '651584928166',
     projectId: 'remedi-a9712',
     storageBucket: 'remedi-a9712.appspot.com',
+    androidClientId: '651584928166-7cbmhkmqkac5ferkelfqhijedl7ft4ta.apps.googleusercontent.com',
+    iosClientId: '651584928166-irbucppkj6to6n0lc2677boi422qun5v.apps.googleusercontent.com',
     iosBundleId: 'com.example.remedi.RunnerTests',
   );
 }
