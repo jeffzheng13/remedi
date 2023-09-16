@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //home: Dashboard(procedure: Procedure(),),
+      home: Dashboard(procedure: Procedure(),),
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: loginScreen(),
+      //home: loginScreen(),
     );
   }
 }
