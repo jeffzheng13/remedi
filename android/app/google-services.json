@@ -12,7 +12,20 @@
           "package_name": "com.example.remedi"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "651584928166-7cbmhkmqkac5ferkelfqhijedl7ft4ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.remedi",
+            "certificate_hash": "b3bf851de85e9ff36fbbe31180051343ef98827f"
+          }
+        },
+        {
+          "client_id": "651584928166-614ecmobf86obub4tg8s5cfc94p5b3ac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyATpjhdIF42LRNrWfjPWAFXb_EpY3HO7_g"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651584928166-614ecmobf86obub4tg8s5cfc94p5b3ac.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "651584928166-e0qo4k1sgj55n5dug69h2lhthq4tkjn4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.remedi"
+              }
+            }
+          ]
         }
       }
     }
