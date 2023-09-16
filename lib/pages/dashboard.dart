@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
-import 'package:remedi/data-models/schema.dart' as datamodels;
+import 'package:google_fonts/google_fonts.dart';
+import 'package:remedi/widgets/summary.dart';
+import '../data-models/User.dart';
+import '../data-models/Procedure.dart';
 
 class Dashboard extends StatefulWidget {
-  Dashboard({
+  const Dashboard({
       super.key,
-      required this.procedure
+      required this.user,
+      required this.recentProcedure
   });
-  final datamodels.Procedure procedure;
-  final realm = Realm(Configuration.local([datamodels.User.schema]));
+  final User user;
+  final Procedure recentProcedure;
   
   @override
   DashboardState createState() => DashboardState();
@@ -18,6 +21,16 @@ class DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SingleChildScrollView(
+      child: Column(children: [
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: RichText(
+            text: TextSpan(text: "Hello, ${widget.user.name}", style: GoogleFonts.mooli(fontSize: 25, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 75, 217, 79)))),
+        ),
+        Summary(procedure: widget.recentProcedure)
+
+      ])
+    );
   }
 }

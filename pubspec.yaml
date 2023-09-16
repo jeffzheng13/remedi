@@ -38,6 +38,7 @@ dependencies:
   realm: ^1.4.0
   google_fonts: ^6.0.0
   collection: ^1.17.2
+  firebase_core: ^2.15.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

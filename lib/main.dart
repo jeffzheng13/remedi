@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
 import 'package:remedi/pages/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:remedi/data-models/schema.dart' as dm;
-import 'package:remedi/pages/dashboard.dart';
+import 'data-models/User.dart';
+import 'data-models/Procedure.dart';
+import 'pages/dashboard.dart';
+
+Procedure procedure = Procedure(
+  name: 'Knee surgery',
+  summary: 'This is where a summary about the recent operation will go.',
+  warnings: ['Warning 1', 'Warning 2'],
+  appointments: [],
+  actionItems: [],
+  faqs: []
+);
+User user = User(
+  name: 'John',
+  email: 'john@example.com', 
+  password: 'terriblepassword',
+  pmh: [procedure]
+);
 
 void main() {
-  Realm realm = Realm(Configuration.local([dm.User.schema, dm.Procedure.schema, dm.Appointment.schema, dm.ActionItem.schema, dm.Question.schema]));
-  realm.write(() {
-    realm.addAll([
-      dm.User("John", "John@gmail.com", "123"),
-      dm.User("John2", "John2@gmail.com", "1234")
-    ]);
-  });
-  RealmResults<dm.User> users = realm.all<dm.User>();
-  print(users);
   runApp(const MyApp());
 }
 
@@ -24,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //home: Dashboard(procedure: Procedure(),),
+      home: Dashboard(user: user, recentProcedure: procedure,),
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
@@ -36,7 +42,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: loginScreen(),
+      //home: loginScreen(),
     );
   }
 }
