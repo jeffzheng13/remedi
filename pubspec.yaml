@@ -40,6 +40,10 @@ dependencies:
   collection: ^1.17.1
   firebase_core: ^2.15.1
   firebase_auth: ^4.9.0
+  ionicons: ^0.2.2
+  google_sign_in: ^6.1.5
+  rxdart: ^0.27.7
+  cloud_firestore: ^4.9.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -62,6 +66,8 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  assets:
+    - assets/google.jpg
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
