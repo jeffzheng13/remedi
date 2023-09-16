@@ -8,7 +8,6 @@ class Dashboard extends StatefulWidget {
       required this.procedure
   });
   final datamodels.Procedure procedure;
-  final realm = Realm(Configuration.local([datamodels.User.schema]));
   
   @override
   DashboardState createState() => DashboardState();

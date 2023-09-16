@@ -37,7 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   realm: ^1.4.0
   google_fonts: ^6.0.0
-  collection: ^1.17.2
+  collection: ^1.17.1
+  firebase_core: ^2.15.1
+  firebase_auth: ^4.9.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
