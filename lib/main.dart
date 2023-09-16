@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:remedi/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:remedi/data-models/schema.dart';
+import 'package:remedi/pages/dashboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,10 +10,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      home: Dashboard(procedure: Procedure(),),
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
@@ -23,7 +27,6 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: loginScreen(),
     );
   }
 }
