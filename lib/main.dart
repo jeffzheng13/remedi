@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
-import 'package:remedi/data-models/schema.dart';
 import 'package:remedi/pages/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:remedi/data-models/schema.dart' as dm;
 import 'package:remedi/pages/dashboard.dart';
+import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:remedi/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,9 +36,7 @@ class RemediApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: Dashboard(
-      //   procedure: Procedure(),
-      // ),
+      //home: Dashboard(procedure: Procedure(),),
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(

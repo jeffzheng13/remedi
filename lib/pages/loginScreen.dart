@@ -169,7 +169,7 @@ class _loginScreenState extends State<loginScreen> {
             dynamic result = await _auth
                 .signInWithEmailAndPassword(_email, _password)
                 .whenComplete(() => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: ((context) => Dashboard(procedure: null,)))));
+                    .push(MaterialPageRoute(builder: ((context) => Dashboard()))));
           }
         },
         child: Text(
