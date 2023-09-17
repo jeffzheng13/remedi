@@ -24,7 +24,7 @@ class AuthService {
   }
 
   // register with Email and Password
-  Future registerWithEmailAndPassword(String _email, String _password) async {
+  Future registerWithEmailAndPassword(String firstName, String lastName, String _email, String _password) async {
     try {
       auth.UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
@@ -32,11 +32,11 @@ class AuthService {
 
       //create a new document for the user with the uid
       await DatabaseService(uid: user!.uid)
-          .updateUserData('0', 'New Username', _email, user.uid);
+          .updateUserData(firstName, lastName, _email, user.uid);
 
       return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
+    } on auth.FirebaseAuthException catch (e) {
+      print("Caught exception " + e.code);
       return null;
     }
   }
@@ -66,6 +66,8 @@ class AuthService {
           idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
       auth.UserCredential result = await _auth.signInWithCredential(credential);
+
+      //await DatabaseService(uid: )
     } catch (e) {
       print(e.toString());
       return null;

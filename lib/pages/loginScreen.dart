@@ -166,17 +166,22 @@ class _loginScreenState extends State<loginScreen> {
         //elevation: 5.0,
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
-            setState() => loading = true;
-            dynamic result = await _auth
-                .signInWithEmailAndPassword(_email, _password)
-                .whenComplete(() => Navigator.of(context).push(
-                    MaterialPageRoute(builder: ((context) => signUpScreen()))));
+            setState(() => loading = true);
+            dynamic result =
+                await _auth.signInWithEmailAndPassword(_email, _password);
+
             if (result == null) {
-              setState() {
+              setState(() {
                 _error =
                     'The email or password is incorrect. Please try again.';
                 loading = false;
-              }
+              });
+            } else {
+              setState(() {
+                loading = false;
+              });
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: ((context) => signUpScreen())));
             }
           }
         },
@@ -345,6 +350,9 @@ class _loginScreenState extends State<loginScreen> {
                           _buildSignInWithText(),
                           _buildSocialBtnRow(),
                           _buildSignupBtn(),
+                          IconButton(
+                              onPressed: () => _auth.signOut(),
+                              icon: Icon(Icons.logout))
                         ],
                       ),
                     )),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:remedi/pages/auth.dart';
+import 'package:remedi/pages/loading_animation.dart';
 import 'package:remedi/pages/loginScreen.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -16,6 +18,14 @@ class _signUpState extends State<signUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
+
+  bool loading = false;
+  AuthService _auth = AuthService();
+  String firstName = '';
+  String lastName = '';
+  String _error = '';
+  String _password = '';
+  String _email = '';
 
   final kHintTextStyle = TextStyle(
     color: Colors.white54,
@@ -39,7 +49,6 @@ class _signUpState extends State<signUpScreen> {
     ],
   );
 
-
   Widget _buildFirstNameTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,8 +64,7 @@ class _signUpState extends State<signUpScreen> {
           height: 60.0,
           child: TextFormField(
             controller: _firstNameController,
-            validator: (val) => val == null ||
-                    val.isEmpty
+            validator: (val) => val == null || val.isEmpty
                 ? 'First name cannot be empty.'
                 : null,
             keyboardType: TextInputType.emailAddress,
@@ -80,7 +88,7 @@ class _signUpState extends State<signUpScreen> {
     );
   }
 
-    Widget _buildLastNameTF() {
+  Widget _buildLastNameTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -94,9 +102,9 @@ class _signUpState extends State<signUpScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            onChanged: (value) => firstName = value,
             controller: _lastNameController,
-            validator: (val) => val == null ||
-                    val.isEmpty
+            validator: (val) => val == null || val.isEmpty
                 ? 'Last name cannot be empty.'
                 : null,
             keyboardType: TextInputType.emailAddress,
@@ -176,6 +184,7 @@ class _signUpState extends State<signUpScreen> {
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextFormField(
+            onChanged: (value) => _password = value,
             controller: _passwordController,
             validator: (val) =>
                 val == null || val.isEmpty ? 'Enter valid password' : null,
@@ -199,33 +208,33 @@ class _signUpState extends State<signUpScreen> {
     );
   }
 
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: ((context) => signUpScreen()))),
-        //style: TextButton.styleFrom(padding: EdgeInsets.fromLTRB(left, top, right, bottom)
-        child: Text(
-          'Forgot Password?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSignupBtn() {
+  Widget _buildSignUpBtn() {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: OutlinedButton(
         //elevation: 5.0,
-        onPressed: () {
+        onPressed: () async {
           if (_formKey.currentState!.validate()) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: ((context) => const signUpScreen())));
+            setState(() {
+              loading = true;
+            });
+
+            dynamic result = await _auth.registerWithEmailAndPassword(
+                firstName, lastName, _email, _password);
+            if (result == null) {
+              setState(() {
+                _error =
+                    'Failed to register with your email and password. Please try again.';
+                loading = false;
+              });
+            } else {
+              setState(() {
+                loading = false;
+              });
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: ((context) => loginScreen())));
+            }
           }
         },
         //padding: EdgeInsets.all(15.0),
@@ -297,7 +306,9 @@ class _signUpState extends State<signUpScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           IconButton(
-              onPressed: null,
+              onPressed: () => _auth.googleSignIn().whenComplete(() =>
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) => loginScreen())))),
               icon: Icon(
                 Ionicons.logo_google,
                 size: 30,
@@ -308,7 +319,7 @@ class _signUpState extends State<signUpScreen> {
     );
   }
 
-  Widget _buildSignUpBtn() {
+  Widget _buildSignInBtn() {
     return GestureDetector(
       onTap: () => Navigator.of(context)
           .push(MaterialPageRoute(builder: ((context) => loginScreen()))),
@@ -319,7 +330,7 @@ class _signUpState extends State<signUpScreen> {
               text: 'Already have an Account? ',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 13.0,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -327,13 +338,20 @@ class _signUpState extends State<signUpScreen> {
               text: 'Sign In',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18.0,
+                fontSize: 13.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget errorMsg() {
+    return Text(
+      _error,
+      style: TextStyle(color: Colors.red, fontSize: 13),
     );
   }
 
@@ -366,31 +384,36 @@ class _signUpState extends State<signUpScreen> {
                     horizontal: 40.0,
                     vertical: 120.0,
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Sign Up',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 30.0),
-                      _buildFirstNameTF(),
-                      _buildLastNameTF(),
-                      _buildEmailTF(),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                      _buildPasswordTF(),
-                      _buildSignUpBtn(),
-                      _buildSignUpWithText(),
-                      _buildSocialBtnRow(),
-                      _buildSignupBtn(),
-                    ],
+                        SizedBox(height: 20.0),
+                        _buildFirstNameTF(),
+                        SizedBox(height: 20.0),
+                        _buildLastNameTF(),
+                        SizedBox(height: 20.0),
+                        _buildEmailTF(),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        _buildPasswordTF(),
+                        loading ? Loading() : _buildSignUpBtn(),
+                        _buildSignUpWithText(),
+                        _buildSocialBtnRow(),
+                        _buildSignInBtn(),
+                      ],
+                    ),
                   ),
                 ),
               )
