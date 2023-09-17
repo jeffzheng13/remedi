@@ -253,7 +253,12 @@ class _loginScreenState extends State<loginScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           IconButton(
-              onPressed: () => _auth.googleSignIn().whenComplete(() => Navigator.of(context).push(MaterialPageRoute(builder: ((context) => fetch())))),
+              onPressed: () {
+                dynamic result = _auth.googleSignIn();
+                if(result != null) {
+                  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => Dashboard(user: getUser((result as User).uid), recentProcedure: null))));
+                }
+              },
               icon: Icon(
                 Ionicons.logo_google,
                 size: 40,
