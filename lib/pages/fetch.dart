@@ -33,7 +33,23 @@ u.User defaultUser = u.User(
       ],
       name: "Procedure Name",
       summary: "This is the procedure summary."
-    )
+    ),
+    Procedure(
+      faqs: [
+        Question(question: "One of the most frequently asked questions is...", answer: "Here is a very useful answer for you."),
+        Question(question: "Another pretty pressing question that makes you stress.", answer: "Answer to relieve your anxiety that you are on the road to recovery.")
+      ],
+      actionItems: [
+        ActionItem(dateEnd: defaultTime, dateStart: defaultTime, frequency: 4, title: "Acetaminophen - 2 500mg tablets"),
+        ActionItem(dateEnd: defaultTime, dateStart: defaultTime, frequency: 1, title: "Enoxaparin - 40mg"),
+        ActionItem(dateEnd: defaultTime, dateStart: defaultTime, frequency: 4, title: "Cephalexin - 500mg"),
+      ],
+      appointments: [],
+      warnings: [
+      ],
+      name: "Hemiarthroplasty",
+      summary: "Jane Doe underwent a left hip hemiarthroplasty procedure. Dr. John Smith performed a surgical intervention to replace the damaged hip joint with a prosthetic implant."
+    ),
   ]
 );
 

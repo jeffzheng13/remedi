@@ -17,8 +17,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard(
-      {super.key, required this.user});
+  const Dashboard({super.key, required this.user});
   final User? user;
 
   @override
@@ -28,9 +27,16 @@ class Dashboard extends StatefulWidget {
 class DashboardState extends State<Dashboard> {
   AuthService _auth = AuthService();
   Procedure? currentProcedure;
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
-    currentProcedure = widget.user!.pmh.last;
+    if(index == 0) {
+      currentProcedure = widget.user!.pmh.last;
+    } else if (index == 1) {
+      currentProcedure = widget.user!.pmh.first;
+    }
+    
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(),
       child: Scaffold(
@@ -94,8 +100,11 @@ class DashboardState extends State<Dashboard> {
                           collapsed: Container(),
                           expanded: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(currentProcedure?.summary ?? "Failed to get summary",
-                                style: TextStyle(color: Colors.black)),
+                            child: RichText(
+                              text: TextSpan(
+                                children: getSummaryText(currentProcedure),
+                              ),
+                            ),
                           ),
                           theme: const ExpandableThemeData(
                             tapHeaderToExpand: true,
@@ -132,8 +141,7 @@ class DashboardState extends State<Dashboard> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         ListView(
-                          children: getActionItemCards(currentProcedure)
-                        ),
+                            children: getActionItemCards(currentProcedure)),
                         Container(
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -155,9 +163,7 @@ class DashboardState extends State<Dashboard> {
                                 //return getEventsForDay(day, currentProcedure);
                               }),
                         ),
-                        ListView(
-                          children: getFAQCards(currentProcedure)
-                        )
+                        ListView(children: getFAQCards(currentProcedure))
                       ]),
                 ),
               ),
@@ -166,9 +172,14 @@ class DashboardState extends State<Dashboard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(icon: const Icon(Icons.home), onPressed: () {}),
                     IconButton(
-                        icon: const Icon(Icons.history), onPressed: () {}),
+                        icon: const Icon(Icons.home), onPressed: () {
+                          setState(() {
+                            index = (index + 1) % 2;
+                          });
+                        }),
+                    IconButton(
+                        icon: const Icon(Icons.history), onPressed: () { }),
                     IconButton(
                         icon: const Icon(Icons.settings), onPressed: () {}),
                     IconButton(
@@ -214,3 +225,14 @@ List<FAQCard> getFAQCards(Procedure? p) {
 //   }
 //   return events;
 // }
+
+List<TextSpan> getSummaryText(Procedure? p) {
+  List<TextSpan> text = [];
+  if (p == null) return text;
+  text.add(TextSpan(text: p.name+"\n", style: TextStyle(color: Colors.black)));
+  text.add(TextSpan(text: p.summary+"\n", style: TextStyle(color: Colors.black)));
+  for (String s in p.warnings) {
+    text.add(TextSpan(text: s + "\n", style: TextStyle(color: Colors.red)));
+  }
+  return text;
+}
