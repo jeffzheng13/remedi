@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:remedi/data-models/ActionItem.dart';
+import 'package:remedi/data-models/Question.dart';
+import 'package:remedi/widgets/actionItemCard.dart';
+import 'package:remedi/widgets/faqCard.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../data-models/User.dart';
 import '../data-models/Procedure.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
@@ -40,13 +45,13 @@ class DashboardState extends State<Dashboard> {
                 alignment: const AlignmentDirectional(-1.00, 1.00),
                 child: Container(
                   width: double.infinity,
-                  height: 180,
+                  height: 140,
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(15, 10, 10, 10),
                     child: Container(
                       alignment: Alignment.bottomLeft,
                       height: 200,
-                      child: Text(
+                      child: const Text(
                         'Hello, John',
                         style: TextStyle(
                           fontFamily: 'Readex Pro',
@@ -58,158 +63,147 @@ class DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-              Container(
-                child: Align(
-                  alignment: const AlignmentDirectional(0.00, 1.00),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 181, 249, 227),
-                          borderRadius: BorderRadius.all(Radius.circular(5))),
-                      width: double.infinity,
-                      child: ExpandableNotifier(
+              Align(
+                alignment: const AlignmentDirectional(0.00, 1.00),
+                child: Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 3,
+                            color: Color.fromARGB(255, 181, 249, 227)),
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(5)),
+                    margin: const EdgeInsets.all(5),
+                    child: ExpandableNotifier(
                         initialExpanded: false,
                         child: ExpandablePanel(
-                          header: const Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                            child: Text('Your recent procedure',
+                          header: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text("Your recent procedure",
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 20)),
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold)),
                           ),
-                          collapsed: Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            child: const Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                            ),
-                          ),
-                          expanded: const Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10, 10, 10, 10),
-                                child: Text(
-                                  'Information about the procedure\nDon\'t run walk sit ok?',
-                                ),
-                              ),
-                            ],
+                          collapsed: Container(),
+                          expanded: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text("Summary", style: TextStyle(color: Colors.black)),
                           ),
                           theme: const ExpandableThemeData(
                             tapHeaderToExpand: true,
-                            tapBodyToExpand: false,
-                            tapBodyToCollapse: false,
+                            tapBodyToExpand: true,
+                            tapBodyToCollapse: true,
                             headerAlignment:
                                 ExpandablePanelHeaderAlignment.center,
                             hasIcon: true,
                             iconPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                           ),
-                        ),
-                      ),
+                        )),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(15, 10, 10, 0),
+                child: Container(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    'Your Day & Appointments',
+                    style: TextStyle(
+                      fontFamily: 'Readex Pro',
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const Align(
-                      alignment: AlignmentDirectional(-1.00, 1.00),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 10, 20),
-                        child: Text(
-                          'Your Day & Appointments',
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                  child: PageView(
+                      controller: PageController(initialPage: 0),
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        ListView(
+                          children: [
+                            ActionItemCard(
+                                actionItem: ActionItem(
+                                    task: "Take pill",
+                                    timesPerDay: 2,
+                                    daysBetweenAction: 1)),
+                            ActionItemCard(
+                                actionItem: ActionItem(
+                                    task: "Take pill",
+                                    timesPerDay: 2,
+                                    daysBetweenAction: 1)),
+                            ActionItemCard(
+                                actionItem: ActionItem(
+                                    task: "Take pill",
+                                    timesPerDay: 2,
+                                    daysBetweenAction: 1)),
+                            ActionItemCard(
+                                actionItem: ActionItem(
+                                    task: "Take pill",
+                                    timesPerDay: 2,
+                                    daysBetweenAction: 1)),
+                            ActionItemCard(
+                                actionItem: ActionItem(
+                                    task: "Take pill",
+                                    timesPerDay: 2,
+                                    daysBetweenAction: 1))
+                          ],
                         ),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-                        child: Container(
-                          width: double.infinity,
-                          height: 440,
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),
-                                child: PageView(
-                                  controller: PageController(initialPage: 0),
-                                  scrollDirection: Axis.horizontal,
-                                  children: [
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Column(
-                                        children: [Container(height: 100, color: Colors.red),Container(height: 100, color: Color.fromARGB(255, 50, 35, 135)),Container(height: 100, color: Colors.red),Container(height: 100, color: Color.fromARGB(255, 50, 35, 135)),Container(height: 100, color: Colors.red),Container(height: 100, color: Color.fromARGB(255, 50, 35, 135))],
-                                      ),
-                                    ),
-                                    ListView(
-                                      padding: EdgeInsets.zero,
-                                      scrollDirection: Axis.vertical,
-                                      children: [],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Align(
-                                alignment: const AlignmentDirectional(-1.00, 1.00),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      16, 0, 0, 16),
-                                  child:
-                                      smooth_page_indicator.SmoothPageIndicator(
-                                    controller: PageController(initialPage: 0),
-                                    count: 2,
-                                    axisDirection: Axis.horizontal,
-                                    onDotClicked: (i) async {
-                                      await PageController().animateToPage(
-                                        i,
-                                        duration: const Duration(milliseconds: 500),
-                                        curve: Curves.ease,
-                                      );
-                                    },
-                                    effect: const smooth_page_indicator
-                                        .ExpandingDotsEffect(
-                                      expansionFactor: 3,
-                                      spacing: 8,
-                                      radius: 16,
-                                      dotWidth: 16,
-                                      dotHeight: 8,
-                                      dotColor: Colors.black,
-                                      activeDotColor: Colors.black,
-                                      paintStyle: PaintingStyle.fill,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: 3,
+                                  color: Color.fromARGB(255, 181, 249, 227)),
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              borderRadius: BorderRadius.circular(5)),
+                          margin: const EdgeInsets.all(5),
+                          child: TableCalendar(
+                              rowHeight: 45,
+                              calendarStyle: CalendarStyle(
+                                  defaultTextStyle:
+                                      TextStyle(color: Colors.black)),
+                              firstDay: DateTime.utc(2010, 10, 16),
+                              lastDay: DateTime.utc(2030, 3, 14),
+                              focusedDay: DateTime.now(),
+                              eventLoader: (day) {
+                                return [];
+                              }),
                         ),
-                      ),
-                    ),
-                  ],
+                        ListView(
+                          children: [
+                            FAQCard(
+                                faq: Question(
+                                    question: "Question 1", answer: "Answer")),
+                            FAQCard(
+                                faq: Question(
+                                    question: "Question 2", answer: "Answer")),
+                            FAQCard(
+                                faq: Question(
+                                    question: "Question 3", answer: "Answer")),
+                            FAQCard(
+                                faq: Question(
+                                    question: "Question 4", answer: "Answer")),
+                          ],
+                        )
+                      ]),
                 ),
               ),
-              const Spacer(),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(icon: const Icon(Icons.home), onPressed: () {}),
-                    IconButton(icon: const Icon(Icons.history), onPressed: () {}),
-                    IconButton(icon: const Icon(Icons.settings), onPressed: () {})
+                    IconButton(
+                        icon: const Icon(Icons.history), onPressed: () {}),
+                    IconButton(
+                        icon: const Icon(Icons.settings), onPressed: () {})
                   ],
                 ),
               ),
