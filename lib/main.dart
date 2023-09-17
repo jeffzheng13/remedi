@@ -17,14 +17,14 @@ import 'package:rxdart/rxdart.dart';
 final _messageStreamController = BehaviorSubject<RemoteMessage>();
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
- await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
- if (kDebugMode) {
-   print("Handling a background message: ${message.messageId}");
-   print('Message data: ${message.data}');
-   print('Message notification: ${message.notification?.title}');
-   print('Message notification: ${message.notification?.body}');
- }
+  if (kDebugMode) {
+    print("Handling a background message: ${message.messageId}");
+    print('Message data: ${message.data}');
+    print('Message notification: ${message.notification?.title}');
+    print('Message notification: ${message.notification?.body}');
+  }
 }
 
 Future<void> main() async {
@@ -37,10 +37,10 @@ Future<void> main() async {
 
   final settings = await messaging.requestPermission(
     alert: true,
-    announcement: false,
+    announcement: true,
     badge: true,
     carPlay: false,
-    criticalAlert: false,
+    criticalAlert: true,
     provisional: false,
     sound: true,
   );
@@ -55,8 +55,6 @@ Future<void> main() async {
     print('Registration Token=$token');
   }
 
-
-
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (kDebugMode) {
       print('Handling a foreground message: ${message.messageId}');
@@ -69,13 +67,14 @@ Future<void> main() async {
   });
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+  const topic = 'app_promotion';
+  await messaging.subscribeToTopic(topic);
   runApp(new RemediApp());
 }
 
 class RemediApp extends StatelessWidget {
   const RemediApp({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User?>.value(
