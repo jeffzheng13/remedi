@@ -24,7 +24,8 @@ class AuthService {
   }
 
   // register with Email and Password
-  Future registerWithEmailAndPassword(String firstName, String lastName, String _email, String _password) async {
+  Future registerWithEmailAndPassword(String firstName, String lastName,
+      String _email, String _password) async {
     try {
       auth.UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
@@ -66,10 +67,13 @@ class AuthService {
           idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
       auth.UserCredential result = await _auth.signInWithCredential(credential);
-      
+      auth.User? user = result.user;
 
-
-      await DatabaseService(uid: )
+      await DatabaseService(uid: user!.uid).updateUserData(
+          user.displayName!.split(" ")[0],
+          user.displayName!.split(" ")[1],
+          user.email,
+          user.uid);
     } catch (e) {
       print(e.toString());
       return null;

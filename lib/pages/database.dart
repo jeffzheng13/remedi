@@ -5,17 +5,15 @@ class DatabaseService {
   DatabaseService({required this.uid});
   //collection reference
   final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('PatientInfo');
 
-  Future updateUserData(
-      // ignore: non_constant_identifier_names
-      String firstName, String lastName, String email, String uid) async {
+  Future updateUserData(String firstName, String lastName, String? email, String uid) async {
     return await userCollection.doc(uid).set({
-      'firstName': firstName,
-      'lastName': lastName,
+      'first_name': firstName,
+      'last_name': lastName,
       'email': email,
-      'uid': uid
-    });
+      'uid': uid,
+    }, SetOptions(merge: true)).onError((e, _) => print("Error writing document: $e"));
   }
 
   Stream<QuerySnapshot> get users {
