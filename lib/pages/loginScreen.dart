@@ -306,7 +306,7 @@ class _loginScreenState extends State<loginScreen> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    colors: [Color(0xFFE0D2C7), Color(0xFF44B09E)],
+                    colors: [Color(0xFFE0D2C7), Color.fromARGB(255, 68, 176, 158)],
                     stops: [0.1, 0.9],
                   ),
                 ),

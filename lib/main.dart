@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:realm/realm.dart';
 import 'package:remedi/pages/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:remedi/pages/dashboard.dart';
+import 'package:remedi/pages/dashboard.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,21 +13,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(new RemediApp());
-  // Realm realm = Realm(Configuration.local([
-  //   dm.User.schema,
-  //   dm.Procedure.schema,
-  //   dm.Appointment.schema,
-  //   dm.ActionItem.schema,
-  //   dm.Question.schema
-  // ]));
-  // realm.write(() {
-  //   realm.addAll([
-  //     dm.User("John", "John@gmail.com", "123"),
-  //     dm.User("John2", "John2@gmail.com", "1234")
-  //   ]);
-  // });
-  // RealmResults<dm.User> users = realm.all<dm.User>();
-  // print(users);
 }
 
 class RemediApp extends StatelessWidget {
@@ -48,7 +33,7 @@ class RemediApp extends StatelessWidget {
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: loginScreen(),
+      home: Dashboard(user: null, recentProcedure: null),
     );
   }
 }
