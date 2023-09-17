@@ -74,6 +74,8 @@ class AuthService {
           user.displayName!.split(" ")[1],
           user.email,
           user.uid);
+
+      return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
       return null;

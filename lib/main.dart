@@ -34,7 +34,7 @@ class RemediApp extends StatelessWidget {
             '/login': (context) => loginScreen(),
             '/signup':(context) => signUpScreen(),
             //'/dashboard': (context) => Dashboard(),
-            '/fetch': (context) => fetch(),
+
           },
           //home: Dashboard(procedure: Procedure(),),
           theme: ThemeData(

@@ -1,8 +1,7 @@
-
 class Appointment {
-  final DateTime time;
+  final DateTime date;
   final String name;
   final String description;
 
-  Appointment(this.time, this.name, this.description);
+  Appointment({required this.date, required this.name, required this.description});
 }

@@ -128,31 +128,7 @@ class DashboardState extends State<Dashboard> {
                       children: [
                         ListView(
                           children: [
-                            ActionItemCard(
-                                actionItem: ActionItem(
-                                    task: "Take pill",
-                                    timesPerDay: 2,
-                                    daysBetweenAction: 1)),
-                            ActionItemCard(
-                                actionItem: ActionItem(
-                                    task: "Take pill",
-                                    timesPerDay: 2,
-                                    daysBetweenAction: 1)),
-                            ActionItemCard(
-                                actionItem: ActionItem(
-                                    task: "Take pill",
-                                    timesPerDay: 2,
-                                    daysBetweenAction: 1)),
-                            ActionItemCard(
-                                actionItem: ActionItem(
-                                    task: "Take pill",
-                                    timesPerDay: 2,
-                                    daysBetweenAction: 1)),
-                            ActionItemCard(
-                                actionItem: ActionItem(
-                                    task: "Take pill",
-                                    timesPerDay: 2,
-                                    daysBetweenAction: 1))
+                            
                           ],
                         ),
                         Container(
@@ -177,18 +153,7 @@ class DashboardState extends State<Dashboard> {
                         ),
                         ListView(
                           children: [
-                            FAQCard(
-                                faq: Question(
-                                    question: "Question 1", answer: "Answer")),
-                            FAQCard(
-                                faq: Question(
-                                    question: "Question 2", answer: "Answer")),
-                            FAQCard(
-                                faq: Question(
-                                    question: "Question 3", answer: "Answer")),
-                            FAQCard(
-                                faq: Question(
-                                    question: "Question 4", answer: "Answer")),
+                            
                           ],
                         )
                       ]),

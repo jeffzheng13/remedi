@@ -7,6 +7,8 @@ import 'package:remedi/pages/fetch.dart';
 //import 'package:remedi/pages/dashboard.dart';
 import 'package:remedi/pages/loading_animation.dart';
 import 'package:remedi/pages/signUpScreen.dart';
+import 'package:remedi/pages/user.dart';
+import 'fetch.dart';
 
 class loginScreen extends StatefulWidget {
   loginScreen({super.key});
@@ -183,7 +185,7 @@ class _loginScreenState extends State<loginScreen> {
                 loading = false;
               });
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: ((context) => signUpScreen())));
+                  MaterialPageRoute(builder: ((context) => Dashboard(user: getUser((result as User).uid), recentProcedure: null,))));
             }
           }
         },

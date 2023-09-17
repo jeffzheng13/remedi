@@ -1,3 +1,4 @@
+import 'package:remedi/pages/dashboard.dart';
 import 'package:remedi/pages/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class wrapper extends StatelessWidget {
     if (user == null) {
       return loginScreen();
     } else {
-      return fetch();
+      return Dashboard(user: getUser(user.uid), recentProcedure: null);
     }
   }
 }

@@ -1,7 +1,12 @@
 class ActionItem {
-  final String task;
-  final int timesPerDay;
-  final int daysBetweenAction;
+  final String title;
+  final int frequency;
+  final DateTime? dateStart;
+  final DateTime? dateEnd;
 
-  ActionItem({required this.task, required this.timesPerDay, required this.daysBetweenAction});
+  ActionItem(
+      {required this.title,
+      required this.frequency,
+      required this.dateStart,
+      required this.dateEnd});
 }
