@@ -185,7 +185,7 @@ class _loginScreenState extends State<loginScreen> {
                 loading = false;
               });
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: ((context) => Dashboard(user: getUser((result as User).uid), recentProcedure: null,))));
+                  MaterialPageRoute(builder: ((context) => Dashboard(user: getUser((result as User).uid)))));
             }
           }
         },
@@ -256,7 +256,7 @@ class _loginScreenState extends State<loginScreen> {
               onPressed: () {
                 dynamic result = _auth.googleSignIn();
                 if(result != null) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => Dashboard(user: getUser((result as User).uid), recentProcedure: null))));
+                  Navigator.of(context).push(MaterialPageRoute(builder: ((context) => Dashboard(user: getUser((result as User).uid)))));
                 }
               },
               icon: Icon(
