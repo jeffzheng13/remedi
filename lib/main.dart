@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:remedi/pages/loginScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-//import 'package:remedi/pages/dashboard.dart';
+import 'package:remedi/pages/dashboard.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class RemediApp extends StatelessWidget {
       darkTheme: ThemeData(brightness: Brightness.dark),
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: loginScreen(),
+      home: Dashboard(user: null, recentProcedure: null),
     );
   }
 }
