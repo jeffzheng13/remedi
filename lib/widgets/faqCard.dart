@@ -1,12 +1,13 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:remedi/data-models/ActionItem.dart';
+import 'package:remedi/data-models/Question.dart';
 
 /// Creates an Image block for Intro section
-class ActionItemCard extends StatelessWidget {
-  const ActionItemCard({super.key, required this.actionItem});
+class FAQCard extends StatelessWidget {
+  const FAQCard({super.key, required this.faq});
 
-  final ActionItem actionItem;
+  final Question faq;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +24,12 @@ class ActionItemCard extends StatelessWidget {
         child: ExpandablePanel(
           header: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Text("${actionItem.task}", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
+            child: Text("${faq.question}", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           collapsed: Container(),
           expanded: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Text("Repeat ${actionItem.timesPerDay}x, every ${actionItem.daysBetweenAction} day(s)", style: style),
+            child: Text(faq.answer, style: style),
           ),
           theme: const ExpandableThemeData(
             tapHeaderToExpand: true,

@@ -69,7 +69,7 @@ class AuthService {
       
 
 
-      await DatabaseService(uid: )
+      //await DatabaseService(uid: )
     } catch (e) {
       print(e.toString());
       return null;
