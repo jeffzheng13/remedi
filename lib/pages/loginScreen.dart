@@ -359,9 +359,6 @@ class _loginScreenState extends State<loginScreen> {
                           _buildSignInWithText(),
                           _buildSocialBtnRow(),
                           _buildSignupBtn(),
-                          IconButton(
-                              onPressed: () => _auth.signOut(),
-                              icon: Icon(Icons.logout))
                         ],
                       ),
                     )),

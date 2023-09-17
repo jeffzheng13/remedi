@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:remedi/data-models/ActionItem.dart';
 import 'package:remedi/data-models/Question.dart';
-import 'package:remedi/widgets/actionItemCard.dart';
+import 'package:remedi/pages/auth.dart';
+//import 'package:remedi/widgets/actionItemCard.dart';
 import 'package:remedi/widgets/faqCard.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../data-models/User.dart';
@@ -24,6 +25,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class DashboardState extends State<Dashboard> {
+  AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -66,8 +68,7 @@ class DashboardState extends State<Dashboard> {
               Align(
                 alignment: const AlignmentDirectional(0.00, 1.00),
                 child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                   child: Container(
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -90,7 +91,8 @@ class DashboardState extends State<Dashboard> {
                           collapsed: Container(),
                           expanded: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text("Summary", style: TextStyle(color: Colors.black)),
+                            child: Text("Summary",
+                                style: TextStyle(color: Colors.black)),
                           ),
                           theme: const ExpandableThemeData(
                             tapHeaderToExpand: true,
@@ -127,9 +129,7 @@ class DashboardState extends State<Dashboard> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         ListView(
-                          children: [
-                            
-                          ],
+                          children: [],
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -152,9 +152,7 @@ class DashboardState extends State<Dashboard> {
                               }),
                         ),
                         ListView(
-                          children: [
-                            
-                          ],
+                          children: [],
                         )
                       ]),
                 ),
@@ -168,7 +166,10 @@ class DashboardState extends State<Dashboard> {
                     IconButton(
                         icon: const Icon(Icons.history), onPressed: () {}),
                     IconButton(
-                        icon: const Icon(Icons.settings), onPressed: () {})
+                        icon: const Icon(Icons.settings), onPressed: () {}),
+                    IconButton(
+                        onPressed: () => _auth.signOut(),
+                        icon: Icon(Icons.logout))
                   ],
                 ),
               ),
