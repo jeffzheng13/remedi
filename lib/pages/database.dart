@@ -11,8 +11,10 @@ class DatabaseService {
       // ignore: non_constant_identifier_names
       String firstName, String lastName, String email, String uid) async {
     return await userCollection.doc(uid).set({
-      'Bus': firstName,
-      'displayName': lastName,
+      'firstName': firstName,
+      'lastName': lastName,
+      'email': email,
+      'uid': uid
     });
   }
 

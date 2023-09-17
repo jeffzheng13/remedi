@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:remedi/pages/auth.dart';
+import 'package:remedi/pages/dashboard.dart';
+import 'package:remedi/pages/fetch.dart';
 //import 'package:remedi/pages/dashboard.dart';
 import 'package:remedi/pages/loading_animation.dart';
 import 'package:remedi/pages/signUpScreen.dart';
@@ -249,7 +251,7 @@ class _loginScreenState extends State<loginScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           IconButton(
-              onPressed: null,
+              onPressed: () => _auth.googleSignIn().whenComplete(() => Navigator.of(context).push(MaterialPageRoute(builder: ((context) => fetch())))),
               icon: Icon(
                 Ionicons.logo_google,
                 size: 40,

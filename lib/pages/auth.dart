@@ -66,8 +66,10 @@ class AuthService {
           idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
 
       auth.UserCredential result = await _auth.signInWithCredential(credential);
+      
 
-      //await DatabaseService(uid: )
+
+      await DatabaseService(uid: )
     } catch (e) {
       print(e.toString());
       return null;
