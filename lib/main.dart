@@ -10,6 +10,8 @@ import 'package:remedi/pages/signUpScreen.dart';
 import 'package:remedi/pages/user.dart';
 import 'package:remedi/pages/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +19,22 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final messaging = FirebaseMessaging.instance;
+
+  final settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  if (kDebugMode) {
+    print('Permission granted: ${settings.authorizationStatus}');
+  }
+
   runApp(new RemediApp());
 }
 
@@ -32,9 +50,8 @@ class RemediApp extends StatelessWidget {
           home: wrapper(),
           routes: <String, WidgetBuilder>{
             '/login': (context) => loginScreen(),
-            '/signup':(context) => signUpScreen(),
+            '/signup': (context) => signUpScreen(),
             //'/dashboard': (context) => Dashboard(),
-
           },
           //home: Dashboard(procedure: Procedure(),),
           theme: ThemeData(

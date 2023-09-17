@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:remedi/data-models/ActionItem.dart';
 import 'package:remedi/data-models/Appointment.dart';
 import 'package:remedi/data-models/Question.dart';
+import 'package:remedi/pages/auth.dart';
 import 'package:remedi/pages/fetch.dart';
 import 'package:remedi/widgets/actionItemCard.dart';
 import 'package:remedi/widgets/faqCard.dart';
@@ -25,6 +26,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class DashboardState extends State<Dashboard> {
+  AuthService _auth = AuthService();
   Procedure? currentProcedure;
   @override
   Widget build(BuildContext context) {
@@ -69,8 +71,7 @@ class DashboardState extends State<Dashboard> {
               Align(
                 alignment: const AlignmentDirectional(0.00, 1.00),
                 child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                   child: Container(
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -93,7 +94,8 @@ class DashboardState extends State<Dashboard> {
                           collapsed: Container(),
                           expanded: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(currentProcedure?.summary ?? "Failed to get summary", style: TextStyle(color: Colors.black)),
+                            child: Text(currentProcedure?.summary ?? "Failed to get summary",
+                                style: TextStyle(color: Colors.black)),
                           ),
                           theme: const ExpandableThemeData(
                             tapHeaderToExpand: true,
@@ -168,7 +170,10 @@ class DashboardState extends State<Dashboard> {
                     IconButton(
                         icon: const Icon(Icons.history), onPressed: () {}),
                     IconButton(
-                        icon: const Icon(Icons.settings), onPressed: () {})
+                        icon: const Icon(Icons.settings), onPressed: () {}),
+                    IconButton(
+                        onPressed: () => _auth.signOut(),
+                        icon: Icon(Icons.logout))
                   ],
                 ),
               ),
