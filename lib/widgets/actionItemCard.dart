@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:remedi/data-models/ActionItem.dart';
+import 'package:remedi/data-models/Procedure.dart';
 
 /// Creates an Image block for Intro section
 class ActionItemCard extends StatelessWidget {
@@ -23,12 +24,12 @@ class ActionItemCard extends StatelessWidget {
         child: ExpandablePanel(
           header: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Text("${actionItem.task}", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
+            child: Text("${actionItem.title}", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           collapsed: Container(),
           expanded: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Text("Repeat ${actionItem.timesPerDay}x, every ${actionItem.daysBetweenAction} day(s)", style: style),
+            child: Text("Repeat ${actionItem.frequency} times per day", style: style),
           ),
           theme: const ExpandableThemeData(
             tapHeaderToExpand: true,
