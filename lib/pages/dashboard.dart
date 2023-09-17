@@ -1,8 +1,12 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:remedi/data-models/ActionItem.dart';
+import 'package:remedi/data-models/Appointment.dart';
 import 'package:remedi/data-models/Question.dart';
 import 'package:remedi/pages/auth.dart';
-//import 'package:remedi/widgets/actionItemCard.dart';
+import 'package:remedi/pages/fetch.dart';
+import 'package:remedi/widgets/actionItemCard.dart';
 import 'package:remedi/widgets/faqCard.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../data-models/User.dart';
@@ -16,9 +20,8 @@ import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard(
-      {super.key, required this.user, required this.recentProcedure});
+      {super.key, required this.user});
   final User? user;
-  final Procedure? recentProcedure;
 
   @override
   DashboardState createState() => DashboardState();
@@ -26,8 +29,10 @@ class Dashboard extends StatefulWidget {
 
 class DashboardState extends State<Dashboard> {
   AuthService _auth = AuthService();
+  Procedure? currentProcedure;
   @override
   Widget build(BuildContext context) {
+    currentProcedure = widget.user!.pmh.last;
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(),
       child: Scaffold(
@@ -53,8 +58,8 @@ class DashboardState extends State<Dashboard> {
                     child: Container(
                       alignment: Alignment.bottomLeft,
                       height: 200,
-                      child: const Text(
-                        'Hello, John',
+                      child: Text(
+                        'Hello, ${widget.user?.first_name}',
                         style: TextStyle(
                           fontFamily: 'Readex Pro',
                           fontWeight: FontWeight.bold,
@@ -91,7 +96,7 @@ class DashboardState extends State<Dashboard> {
                           collapsed: Container(),
                           expanded: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text("Summary",
+                            child: Text(currentProcedure?.summary ?? "Failed to get summary",
                                 style: TextStyle(color: Colors.black)),
                           ),
                           theme: const ExpandableThemeData(
@@ -129,7 +134,7 @@ class DashboardState extends State<Dashboard> {
                       scrollDirection: Axis.horizontal,
                       children: [
                         ListView(
-                          children: [],
+                          children: getActionItemCards(currentProcedure)
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -148,11 +153,11 @@ class DashboardState extends State<Dashboard> {
                               lastDay: DateTime.utc(2030, 3, 14),
                               focusedDay: DateTime.now(),
                               eventLoader: (day) {
-                                return [];
+                                return getEventsForDay(day, currentProcedure);
                               }),
                         ),
                         ListView(
-                          children: [],
+                          children: getFAQCards(currentProcedure)
                         )
                       ]),
                 ),
@@ -179,4 +184,34 @@ class DashboardState extends State<Dashboard> {
       ),
     );
   }
+}
+
+List<ActionItemCard> getActionItemCards(Procedure? p) {
+  List<ActionItemCard> actionItemCards = [];
+  if (p == null) return actionItemCards;
+  for (ActionItem a in p.actionItems) {
+    actionItemCards.add(ActionItemCard(actionItem: a));
+  }
+  return actionItemCards;
+}
+
+List<FAQCard> getFAQCards(Procedure? p) {
+  List<FAQCard> faqCards = [];
+  if (p == null) return faqCards;
+  for (Question q in p.faqs) {
+    faqCards.add(FAQCard(faq: q));
+  }
+  return faqCards;
+}
+
+List<Event> getEventsForDay(DateTime day, Procedure? p) {
+  List<Event> events = [];
+  if (p == null) return events;
+  for (Appointment a in p.appointments) {
+    if (a.date.day == day.day) {
+      Event e = Event(a.name);
+      events.add(e);
+    }
+  }
+  return events;
 }

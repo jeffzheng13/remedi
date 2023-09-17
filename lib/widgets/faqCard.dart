@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:remedi/data-models/ActionItem.dart';
+import 'package:remedi/data-models/Procedure.dart';
 import 'package:remedi/data-models/Question.dart';
 
 /// Creates an Image block for Intro section
