@@ -10,6 +10,33 @@ import '../data-models/ActionItem.dart';
 import '../data-models/Appointment.dart';
 import '../data-models/Question.dart';
 
+DateTime defaultTime = DateTime(0,0,0,0);
+u.User defaultUser = u.User(
+  first_name: "Paul",
+  last_name: "Bunyan",
+  email: "pbunyan@gmail.com",
+  pmh: [
+    Procedure(
+      faqs: [
+        Question(question: "One of the most frequently asked questions is...", answer: "Here is a very useful answer for you."),
+        Question(question: "Another pretty pressing question that makes you stress.", answer: "Answer to relieve your anxiety that you are on the road to recovery.")
+      ],
+      actionItems: [
+        ActionItem(dateEnd: defaultTime, dateStart: defaultTime, frequency: 2, title: "Brush your teeth."),
+        ActionItem(dateEnd: defaultTime, dateStart: defaultTime, frequency: 2, title: "Floss your gums."),
+      ],
+      appointments: [],
+      warnings: [
+        "Don't eat candy.",
+        "Don't eat hard foods.",
+        "Don't eat hot foods"
+      ],
+      name: "Procedure Name",
+      summary: "This is the procedure summary."
+    )
+  ]
+);
+
 u.User? getUser(String uid) {
   CollectionReference<Map<String, dynamic>> db =
       FirebaseFirestore.instance.collection("PatientInfo");
@@ -26,7 +53,7 @@ u.User? getUser(String uid) {
       return user;
     }
   });
-  return null;
+  return defaultUser;
 }
 
 List<Procedure> getProcedures(List<Map<String, dynamic>> data) {

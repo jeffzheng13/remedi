@@ -15,7 +15,7 @@ class wrapper extends StatelessWidget {
     if (user == null) {
       return loginScreen();
     } else {
-      return Dashboard(user: getUser(user.uid), recentProcedure: null);
+      return Dashboard(user: getUser(user.uid));
     }
   }
 }

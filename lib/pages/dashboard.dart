@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:remedi/data-models/ActionItem.dart';
 import 'package:remedi/data-models/Appointment.dart';
@@ -151,7 +149,8 @@ class DashboardState extends State<Dashboard> {
                               lastDay: DateTime.utc(2030, 3, 14),
                               focusedDay: DateTime.now(),
                               eventLoader: (day) {
-                                return getEventsForDay(day, currentProcedure);
+                                return [];
+                                //return getEventsForDay(day, currentProcedure);
                               }),
                         ),
                         ListView(
@@ -199,14 +198,14 @@ List<FAQCard> getFAQCards(Procedure? p) {
   return faqCards;
 }
 
-List<Event> getEventsForDay(DateTime day, Procedure? p) {
-  List<Event> events = [];
-  if (p == null) return events;
-  for (Appointment a in p.appointments) {
-    if (a.date.day == day.day) {
-      Event e = Event(a.name);
-      events.add(e);
-    }
-  }
-  return events;
-}
+// List<Event> getEventsForDay(DateTime day, Procedure? p) {
+//   List<Event> events = [];
+//   if (p == null) return events;
+//   for (Appointment a in p.appointments) {
+//     if (a.date.day == day.day) {
+//       Event e = Event(a.name);
+//       events.add(e);
+//     }
+//   }
+//   return events;
+// }
